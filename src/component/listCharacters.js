@@ -1,45 +1,26 @@
 import React, { useState } from 'react';
+import CharactersCount from "./nbCharacters.js";
+import { Link, useLoaderData } from "react-router-dom";
 
-const characters = require('../data/characters.json');
+
 
 function CharactersList() {
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
-
-  const handleClick = (character) => {
-    setSelectedCharacter(character);
-  };
+  const characters = useLoaderData();
 
   return (
     <>
+      <h2>Marvel Characters</h2>
       <h3>List of characters :</h3>
       <ul>
         {characters.map((character) => (
           <li
             key={character.id}
-            onClick={() => handleClick(character)}
           >
-            <p>{character.name}</p>
+            <Link to="/characters/1">{character.name}</Link>
           </li>
         ))}
       </ul>
-      {selectedCharacter && (
-        <div>
-          <h4>Nom :</h4>
-          {selectedCharacter.name}
-          <br></br>
-          <h4>Image : </h4>
-          {selectedCharacter.thumbnail && (
-            <img
-              src={`${selectedCharacter.thumbnail.path}.${selectedCharacter.thumbnail.extension}`}
-              alt={selectedCharacter.name}
-              style={{ maxWidth: '100px' }}
-            />
-          )}
-          <br />
-          <h4>Description :</h4>
-          {selectedCharacter.description}
-        </div>
-      )}
+      <CharactersCount characters={characters}/>
     </>
   );
 }

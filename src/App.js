@@ -1,23 +1,21 @@
 import Title from "./component/titre.js";
-import CharactersList from "./component/listCharacters.js";
-import CharactersCount from "./component/nbCharacters.js";
+
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import routes from './routes.js';
 
 const characters=require('./data/characters.json');
-
+const router = createBrowserRouter(routes)
 
 function App() {
 
   return (
     <>
       <Title/>
-      <CharactersList characters={characters}/>
-      <CharactersCount characters={characters}/>
+      <RouterProvider router={router} />
     </>
   );
 }
 
 export default App;
 
-
-
-//<> et </> permettent de mettre plsuieurs composant au sein d'un composant
+//<> et </> permettent de mettre plsuieurs composant au sein d'un composant 
