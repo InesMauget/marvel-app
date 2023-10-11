@@ -1,26 +1,25 @@
-import { useParams } from "react-router-dom";
-const characters = require('../data/characters.json');
+import { useLoaderData } from "react-router-dom";
 
 function Character() {
-    const { id } = useParams();
+    const character = useLoaderData();
   return (
     <>
-      {characters && (
+      {character && (
         <div>
           <h4>Nom :</h4>
-          {id.name}
+          {character.name}
           <br></br>
           <h4>Image : </h4>
-          {id.thumbnail && (
+          {character.thumbnail && (
             <img
-              src={`${id.thumbnail.path}.${id.thumbnail.extension}`}
-              alt={id.name}
+              src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+              alt={character.name}
               style={{ maxWidth: '100px' }}
             />
           )}
           <br />
           <h4>Description :</h4>
-          {id.description}
+          {character.description}
         </div>
       )}
     </>

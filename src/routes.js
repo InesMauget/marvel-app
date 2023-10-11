@@ -1,7 +1,8 @@
-import { Outlet } from "react-router";
-import { NavLink } from "react-router-dom";
-import CharactersList from "./component/listCharacters.js";
 import Character from "./component/character.js";
+import Root from "./component/layout.js";
+import CharactersPage from "./pages/characters-pages.js";
+import About from "./pages/about.js";
+import Notfound from "./pages/404.js";
 
 const characters = require('./data/characters.json');
 
@@ -12,43 +13,25 @@ const routes =  [
         children: [
             {
                 path: "characters",
-                element: <CharactersList />,
+                element: <CharactersPage />,
                 loader: () => characters
             },
             {
                 path: "characters/:id",
-                element: <Character/>,                
+                element: <Character/>,    
+                loader:({params})=> characters.find((character) => character.id === params.id )           
             },
             {   
                 path: "about",
-                element: <div>
-                    About
-                </div>,
+                element: <About/>,
             },
             {
                 path: "*",
-                element: <div>Not Found</div>,
+                element: <Notfound/>,
             }
         ],
     },
 
 ]
-
-function Root() {
-    return (
-        <>
-            <header>
-                <nav>
-                    <NavLink to="/characters">Characters</NavLink>
-                    <NavLink to="/characters/:id">Character</NavLink>
-                    <NavLink to="/about">About</NavLink>
-                </nav>
-            </header>
-            <div className="content">
-                <Outlet />
-            </div>
-        </>
-    );
-}
 
 export default routes;
