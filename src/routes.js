@@ -1,37 +1,18 @@
-import Character from "./component/character.js";
-import Root from "./component/layout.js";
-import CharactersPage from "./pages/characters-pages.js";
-import About from "./pages/about.js";
-import Notfound from "./pages/404.js";
+import Layout from "./Layout";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import CharactersPage from "./pages/CharactersPage";
 
-const characters = require('./data/characters.json');
-
-const routes =  [
+const routes = [
     {
         path: "/",
-        element: <Root />,
+        element: <Layout />,
         children: [
-            {
-                path: "characters",
-                element: <CharactersPage />,
-                loader: () => characters
-            },
-            {
-                path: "characters/:id",
-                element: <Character/>,    
-                loader:({params})=> characters.find((character) => character.id === params.id )           
-            },
-            {   
-                path: "about",
-                element: <About/>,
-            },
-            {
-                path: "*",
-                element: <Notfound/>,
-            }
+            { path: "/", element: <CharactersPage /> },
+            { path: "/about", element: <AboutPage /> },
+            { path: "/contact", element: <ContactPage /> },
         ],
     },
-
-]
+];
 
 export default routes;

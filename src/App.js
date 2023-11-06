@@ -1,21 +1,16 @@
-import Title from "./component/titre.js";
-
+import './style.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import routes from './routes.js';
 
-const characters=require('./data/characters.json');
+import routes from './routes';
+
+// Create a router that uses the client side history strategy for
 const router = createBrowserRouter(routes)
 
 function App() {
 
   return (
-    <>
-      <Title/>
-      <RouterProvider router={router} />
-    </>
+    <RouterProvider router={router} />
   );
 }
 
 export default App;
-
-//<> et </> permettent de mettre plsuieurs composant au sein d'un composant 
