@@ -1,11 +1,21 @@
 [
     {
         "id": "1009175",
-        "name": "Beast"
+        "name": "Beast",
+        "thumbnail": {
+            "path": "http://i.annihil.us/u/prod/marvel/i/mg/2/80/511a79a0451a3",
+            "extension": "jpg"
+        },
+        "description": ""
     },
     {
         "id": "1009220",
-        "name": "Captain America"
+        "name": "Captain America",
+        "thumbnail": {
+            "path": "http://i.annihil.us/u/prod/marvel/i/mg/3/50/537ba56d31087",
+            "extension": "jpg"
+        },
+        "description": "Vowing to serve his country any way he could, young Steve Rogers took the super soldier serum to become America's one-man army. Fighting for the red, white and blue for over 60 years, Captain America is the living, breathing symbol of freedom and liberty."
     },
     {
         "id": "1009268",
