@@ -1,70 +1,75 @@
 import { render, screen } from '@testing-library/react';
-import { CharactersList } from './CharactersList';
-import { BrowserRouter } from 'react-router-dom'
-import CharacterDetail from './CharacterDetail';
+import CharacterDetailPage from './CharacterDetailPage';
+import { BrowserRouter } from 'react-router-dom';
 
-describe('CharactersDetail', () => {
-    it('renders the character detail', () => {
-        // when 
-        const character = {
-            id: "1",
-            name: "Thor",
-            description: "Thor description",
-            thumbnail: {
-                path: "https://foo.bar",
-                extension: "jpg"
-            }
-        }
+// fix for ResizeObserver not being defined in Jest
+const { ResizeObserver } = window;
 
-        // then
-        render(<CharacterDetail character={character} />, { wrapper: BrowserRouter });  
+beforeEach(() => {
+    delete window.ResizeObserver;
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+        observe: jest.fn(),
+        unobserve: jest.fn(),
+        disconnect: jest.fn()
+    }));
+});
 
-        // expect a heading with the character name
-        const h2Element = screen.getByRole('heading', { level: 2, name: character.name });
-        expect(h2Element).toBeInTheDocument();
+afterEach(() => {
+    window.ResizeObserver = ResizeObserver;
+    jest.restoreAllMocks();
+});
 
-        // expect a paragraph with the character description
-        const pElement = screen.getByText(character.description);
-        expect(pElement).toBeInTheDocument();
+// end fix for ResizeObserver not being defined in Jest
 
-        // expect an image with the character thumbnail
-        const imgElement = screen.getByRole('img', { name: character.name });
-        expect(imgElement).toBeInTheDocument();
-        expect(imgElement).toHaveAttribute('src', `${character.thumbnail.path}/standard_large.${character.thumbnail.extension}`);
-    });
+const character = {
+    id: "1",
+    name: "Thor",
+    description: "Thor description",
+}
 
-    it('renders the character detail without a thumbnail', () => {
-        // when 
-        const character = {
-            id: "1",
-            name: "Thor",
-            description: "Thor description",
-        }
+// mock the useLoaderData hook, so that we can test the CharacterDetailPage component
+jest.mock('react-router', () => ({
+    ...jest.requireActual('react-router'), // use actual for all non-hook parts
+    useLoaderData: () => {
+        return character;
+    },
+}));
 
-        // then
-        render(<CharacterDetail character={character} />, { wrapper: BrowserRouter });  
+describe('CharacterDetailPage', () => {
 
-        // expect a heading with the character name
-        const h2Element = screen.getByRole('heading', { level: 2, name: character.name });
-        expect(h2Element).toBeInTheDocument();
-
-        // expect a paragraph with the character description
-        const pElement = screen.getByText(character.description);
-        expect(pElement).toBeInTheDocument();
-
-        // expect no image
-        const imgElement = screen.queryByRole('img', { name: character.name });
-        expect(imgElement).not.toBeInTheDocument();
-    });
-
-    it('renders nothing when no character is provided', () => {
+    test('render CharacterDetailPage component', () => {
         // when
 
         // then
-        render(<CharacterDetail />, { wrapper: BrowserRouter });  
+        render(<CharacterDetailPage />, { wrapper: BrowserRouter });
 
-        // expect empty h2 element
-        const h2Element = screen.queryByRole('heading', { level: 2 });
-        expect(h2Element).toBeEmptyDOMElement();        
+        // expect the document title to be "Thor | Marvel App"
+        expect(document.title).toBe(`${character.name} | Marvel App`);
+
+        // expect to have a heading with the character name
+        const h2Element = screen.getByRole('heading', { level: 2, name: character.name });
+        expect(h2Element).toBeInTheDocument();
+
+        // expect to have a paragraph with the character description
+        const pElement = screen.getByText(character.description);
+        expect(pElement).toBeInTheDocument();
+
+        // expect to have a heading with the text "Capacities"
+        const h2CapacitiesElement = screen.getByRole('heading', { level: 2, name: 'Capacities' });
+        expect(h2CapacitiesElement).toBeInTheDocument();
+
+        // expect to have a heading with the text "Using D3"
+        const h3D3Element = screen.getByRole('heading', { level: 3, name: 'Using D3' });
+        expect(h3D3Element).toBeInTheDocument();
+
+        // expect to have a heading with the text "Using Recharts"
+        const h3RechartsElement = screen.getByRole('heading', { level: 3, name: 'Using Recharts' });
+        expect(h3RechartsElement).toBeInTheDocument();
+
+        // expect to have a div with the id "pie-container"
+        expect(document.getElementById('pie-container')).toBeInTheDocument();
+
+        // expect to a an div with class "recharts-wrapper"
+        expect(document.querySelector('.recharts-wrapper')).toBeInTheDocument();
     });
 });

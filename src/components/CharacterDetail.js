@@ -1,3 +1,5 @@
+import D3PieChart from './D3PieChart';
+
 function CharacterDetail({ character = {} }) {
     return (
         <div>
@@ -8,6 +10,7 @@ function CharacterDetail({ character = {} }) {
             }
             <p>{character.description}</p>
             <p>{character.modified}</p>
+            <D3PieChart data={character.capacities} /> 
         </div>
     );
 }
