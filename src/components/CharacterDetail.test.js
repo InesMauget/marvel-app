@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import CharacterDetailPage from './CharacterDetailPage';
 import { BrowserRouter } from 'react-router-dom';
+import CharacterDetailPage from '../pages/CharacterDetailPage';
 
 // fix for ResizeObserver not being defined in Jest
 const { ResizeObserver } = window;
