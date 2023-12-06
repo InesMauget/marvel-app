@@ -31,7 +31,8 @@
             "intelligence": 3,
             "durability": 3,
             "energy": 1,
-            "speed": 2
+            "speed": 2,
+            "fighting": 2
         }
     },
     {
@@ -47,7 +48,8 @@
             "intelligence": 3,
             "durability": 2,
             "energy": 1,
-            "speed": 2
+            "speed": 2,
+            "fighting": 4
         }
     },
     {
